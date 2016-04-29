@@ -1,5 +1,7 @@
-var expressServer = require('./jexpress-server');
-var webpackServer = require('./webpack-server');
+'use strict';
+
+const expressServer = require('./express-server');
+const webpackServer = require('./webpack-server');
 
 const PORT = process.env.PORT || 3001;
 const PROD = process.env.NODE_ENV === 'production';

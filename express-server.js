@@ -1,14 +1,15 @@
-var express = require('express');
-var serveStatic = require('serve-static');
-var fs = require('fs');
-var path = require('path');
-var bodyParser = require('body-parser');
+'use strict';
+
+const express = require('express');
+const serveStatic = require('serve-static');
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 
 module.exports = (PORT) => {
-
-  const data_file = path.join(__dirname, 'src/data/data.json');
-
+  
+  const dataFile = path.join(__dirname, 'src/data/data.json');
   const app = express();
 
   app.use(serveStatic(__dirname + '/build'));
@@ -16,19 +17,19 @@ module.exports = (PORT) => {
   app.use(bodyParser.urlencoded({extended: true}));
 
   // Additional middleware which will set headers that we need on each request.
-  app.use(function(req, res, next) {
-      // Set permissive CORS header - this allows this server to be used only as
-      // an API server in conjunction with something like webpack-dev-server.
-      res.setHeader('Access-Control-Allow-Origin', '*');
+  app.use(function (req, res, next) {
+    // Set permissive CORS header - this allows this server to be used only as
+    // an API server in conjunction with something like webpack-dev-server.
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
-      // Disable caching
-      res.setHeader('Cache-Control', 'no-cache');
-      next();
+    // Disable caching
+    res.setHeader('Cache-Control', 'no-cache');
+    next();
   });
 
   // Here it read the api content
-  app.get('/api', function(req, res) {
-    fs.readFile(data_file, function(err, data) {
+  app.get('/api', function (req, res) {
+    fs.readFile(dataFile, function (err, data) {
       if (err) {
         console.error(err);
         process.exit(1);
@@ -38,24 +39,24 @@ module.exports = (PORT) => {
   });
 
   // Here it write on api
-  app.post('/api', function(req, res) {
-    fs.readFile(data_file, function(err, data) {
+  app.post('/api', function (req, res) {
+    fs.readFile(dataFile, function (err, data) {
       if (err) {
         console.error(err);
         process.exit(1);
       }
-      var datas = JSON.parse(data);
+      let datas = JSON.parse(data);
 
       // new object properties
-      var newData = {
+      let newData = {
         id: Date.now(),
         body: req.body.body
       };
 
       datas.push(newData);
-      fs.writeFile(data_file, JSON.stringify(datas, null, 4), function(err) {
-        if (err) {
-          console.error(err);
+      fs.writeFile(dataFile, JSON.stringify(datas, null, 4), function (error) {
+        if (error) {
+          console.error(error);
           process.exit(1);
         }
         res.json(datas);
@@ -65,9 +66,12 @@ module.exports = (PORT) => {
 
   // Finally listen to the port
   app.listen(PORT, function (err) {
-    if (err) {
-      return console.log(err);
+    if (err) { 
+      console.log(err);
+      return;
     }
-    console.log('Listening at ' + PORT );
+    console.log('Express listening at ' + PORT);
   });
-}
+};
+
+

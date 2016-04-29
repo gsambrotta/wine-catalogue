@@ -1,24 +1,28 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
+'use strict';
+
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config');
 
 
 module.exports = (PORT) => {
-  const backendPort = PORT - 1;
 
+  const expressPort = PORT - 1;
   const server = new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    open: true, // check if it works
     proxy: {
-    '/api': 'http://localhost:' + backendPort
+      '/api': 'http://localhost:' + expressPort 
     }
   });
   
   server.listen(PORT, 'localhost', function (err) {
     if (err) {
-      return console.log(err);
+      console.log(err);
+      return;
     }
-    console.log('Listening at ' + PORT);
+    console.log('Webpack listening at ' + PORT);
   });
-}
+};
