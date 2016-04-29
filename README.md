@@ -9,7 +9,7 @@ npm start
 
 ```
 
-To lint your file before runn the app:
+To lint your file before the app is running:
 
 ```
 npm start lint
