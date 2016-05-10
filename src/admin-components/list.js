@@ -12,7 +12,7 @@ export default class AdminList extends React.Component {
   render() {
     return (
       <div>
-        Edit your wines
+        Admin wine list
       </div>
     );
   }

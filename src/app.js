@@ -40,16 +40,16 @@ ReactDOM.render(
 
   <Router history={browserHistory}>
 
-    <Route path='/' component={App}>
-      <IndexRoute component={Home}/>
-      <Route path='/wines' component={FrontList}/>
-      <Route path='/:wines' component={Detail}/>
+     <Route path='/admin' component={App}>
+      <IndexRoute component={AdminList}/>
+      <Route path='wines' component={Edit}/>
     </Route>
 
-    <Route path='/admin' component={App}>
-      <IndexRoute component={AdminList}/>
-      <Route path='/:wines' component={Edit}/>
-    </Route>
+    <Route path='/' component={App}>
+      <IndexRoute component={Home}/>
+      <Route path='wines' component={FrontList}/>
+      <Route path=':wines' component={Detail}/>
+    </Route>    
 
   </Router>,
 

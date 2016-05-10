@@ -9,7 +9,7 @@ export default class Edit extends React.Component {
   render() {
     return (
       <div>
-        
+        Admin edit
       </div>
     );
   }
