@@ -12,7 +12,6 @@ module.exports = (PORT) => {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
-    open: true, // check if it works
     proxy: {
       '/api': 'http://localhost:' + expressPort 
     }

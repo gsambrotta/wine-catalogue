@@ -1,1 +1,22 @@
-[ "vegan", "in-amphora", "symbiotic", "bio" ]
+[
+	{
+		"id": 1,
+		"name": "vegan",
+		"logo": "/static/img/vegan-logo.png"
+	},
+	{
+		"id": 2,
+		"name": "in-amphora",
+		"logo": "/static/img/amphora-logo.png"
+	},
+	{
+		"id": 3,
+		"name": "symbiotic",
+		"logo": "/static/img/symbiotic-logo.png"
+	},
+	{
+		"id": 4,
+		"name": "bio",
+		"logo": "/static/img/bio-logo.png"
+	}
+]

@@ -7,24 +7,19 @@ const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
 const bl = require('bl');
+const _ = require('lodash');
 
 module.exports = (PORT) => {
   
-  const portString = 'localhost:'+ PORT +'';
   const wineData = path.join(__dirname, 'src/data/wine.json');
   const categoryData = path.join(__dirname, 'src/data/categories.json');
   const regionData = path.join(__dirname, 'src/data/region.json');
 
-  const wineDataUrl = 'http://localhost:3001/src/data/wine.json'; //try to get my json as http
   const app = express();
-
-  const dataFiles = [];
-  dataFiles.push(wineData, categoryData, regionData);
-  const results = [];
-  const count = 0;
+  const jsonParser = bodyParser.json();
 
   app.use(serveStatic(__dirname + '/build'));
-  app.use(bodyParser.json());
+  app.use(jsonParser);
   app.use(bodyParser.urlencoded({extended: true}));
 
   // Additional middleware which will set headers that we need on each request.
@@ -37,39 +32,10 @@ module.exports = (PORT) => {
     res.setHeader('Cache-Control', 'no-cache');
     next();
   });
-  
 
-  function httpGet (index) {
-    app.get('/api', function(req, res) {
-      console.log(wineDataUrl)
 
-      try {
-        http.get( dataFiles[0 + index], function(response) {
-          response.pipe(bl (function (err, data) {
-          if (err) {
-            return console.log('this is my error: ' + err )
-          } 
-          results[index] = data.toString();
-          count++
-
-          if (count == 3) {
-            res.json(JSON.parse(data));
-          }
-          })) 
-        })
-      } catch(e) {
-        console.error('Try catch error: ' + e);
-      }
-    })
-  }
-  
-  for(var i = 0; i < 3; i++) {
-    httpGet(i)
-  }
-
-  /*
-  // Here it read the api content
-  app.get('/api', function (req, res) {
+  // Read datas
+  app.get('/api/wines', function (req, res) {
     fs.readFile(wineData, function (err, data) {
       if (err) {
         console.error(err);
@@ -77,8 +43,73 @@ module.exports = (PORT) => {
       }
       res.json(JSON.parse(data));
     });
-  });
+  })
 
+  app.get('/api/categories', function (req, res) {
+    fs.readFile(categoryData, function (err, data) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(JSON.parse(data));
+    });
+  })
+
+  app.get('/api/regions', function (req, res) {
+    fs.readFile(regionData, function (err, data) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      } else {
+        const regions = JSON.parse(data);
+        res.json(regions);
+      }
+    });
+  })
+
+  app.get('/api/regions/:id', function (req, res) {
+    fs.readFile(regionData, function (err, data) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      } else {
+        const regions = JSON.parse(data);
+        res.json(_.find(regions, region => region.id === req.params.id));
+      }
+    });
+  })
+
+
+  // Write datas
+  app.post('/api/wines', jsonParser, function (req, res) {
+    if (!req.body) return res.sendStatus(400)
+    // req.body
+    // Not sure how should i do here 
+    // Also, how can i tell to it, in which file it should write?
+    console.log(req.body);
+
+    const id = Date.now(),
+    const title = req.body.title,
+    const description = req.body.description,
+    const producer = req.body.producer,
+    const thumb = req.body.thumb,
+    const profile_pic = req.body.profile_pic,
+    const category = req.body.category,
+    const region = req.body.region
+    res.status(202);
+    res.end("yes");
+  })
+
+  app.post('/api/categories', jsonParser, function (req, res) {
+    if (!req.body) return res.sendStatus(400)
+    // req.body
+    console.log(req.body);
+    res.status(202);
+    //res.send();
+    res.end("yes");
+  })
+
+  /*
   // Here it write on api
   app.post('/api', function (req, res) {
     fs.readFile(wineData, function (err, data) {
@@ -112,18 +143,13 @@ module.exports = (PORT) => {
   });
   */
 
-  // Finally listen to the port
+  // Finally, listen to the port
   app.listen(PORT, function (err) {
     if (err) { 
       console.log(err);
       return;
     }
     console.log('Express listening at ' + PORT);
-    /*
-    for(var i = 0; i<3; i++) {
-      httpGet(i)
-    }
-    */
   });
 };
 
