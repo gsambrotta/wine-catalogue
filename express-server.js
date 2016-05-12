@@ -30,6 +30,7 @@ module.exports = (PORT) => {
 
     // Disable caching
     res.setHeader('Cache-Control', 'no-cache');
+    res.status(404).send('Page not found');
     next();
   });
 
@@ -87,15 +88,16 @@ module.exports = (PORT) => {
     // Not sure how should i do here 
     // Also, how can i tell to it, in which file it should write?
     console.log(req.body);
-
-    const id = Date.now(),
-    const title = req.body.title,
-    const description = req.body.description,
-    const producer = req.body.producer,
-    const thumb = req.body.thumb,
-    const profile_pic = req.body.profile_pic,
-    const category = req.body.category,
-    const region = req.body.region
+    
+    const id = Date.now();
+    const title = req.body.title;
+    const description = req.body.description;
+    const producer = req.body.producer;
+    const thumb = req.body.thumb;
+    const profile_pic = req.body.profile_pic;
+    const category = req.body.category;
+    const region = req.body.region;
+    
     res.status(202);
     res.end("yes");
   })

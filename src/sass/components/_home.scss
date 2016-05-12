@@ -1,0 +1,35 @@
+
+.home-comp {
+
+	.cat-list {
+		margin: 0 auto;
+    max-width: 760px;
+
+		li {
+			height: 150px;
+			width: 150px;
+	    padding: 20px;
+		}
+
+	}
+
+	.decoration-lines {
+		height: 32px;
+    width: 450px;
+    margin: 0 auto;
+    margin-top: 30px;
+
+		h3 {
+			margin: -10px 7px 0;
+		}
+
+		hr {
+	    width: 40%;
+		}
+	}
+
+	h3 {
+		text-align: center;
+    margin-left: -6%;
+	}
+}

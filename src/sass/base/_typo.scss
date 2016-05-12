@@ -1,0 +1,58 @@
+// Typography
+// ------------------
+
+
+// Font size
+$default-size: 1.5rem;
+
+// Import fonts type
+// Source Sans Pro
+@include font-face('SourceSansPro', 'SourceSansPro-Regular', 'Source_Sans_Pro', 'serif', 500, normal);
+@include font-face('SourceSansPro', 'SourceSansPro-Light', 'Source_Sans_Pro', 'serif', 300, normal);
+@include font-face('SourceSansPro', 'SourceSansPro-Italic', 'Source_Sans_Pro', 'serif', 500, italic);
+@include font-face('SourceSansPro', 'SourceSansPro-LightItalic', 'Source_Sans_Pro', 'serif', 300, italic);
+@include font-face('SourceSansPro', 'SourceSansPro-Bold', 'Source_Sans_Pro', 'serif', 700, normal);
+@include font-face('SourceSansPro', 'SourceSansPro-ExtraLight', 'Source_Sans_Pro', 'serif', 100, normal);
+
+// Roboto Slab 
+@include font-face('RobotoSlab', 'RobotoSlab-Regular', 'Roboto_Slab', 'sans-serif', 500, normal);
+@include font-face('RobotoSlab', 'RobotoSlab-Light', 'Roboto_Slab', 'sans-serif', 300, normal);
+@include font-face('RobotoSlab', 'RobotoSlab-Italic', 'Roboto_Slab', 'sans-serif', 500, italic);
+@include font-face('RobotoSlab', 'RobotoSlab-LightItalic', 'Roboto_Slab', 'sans-serif', 300, italic);
+@include font-face('RobotoSlab', 'RobotoSlab-Bold', 'Roboto_Slab', 'sans-serif', 700, normal);
+@include font-face('RobotoSlab', 'RobotoSlab-ExtraLight', 'Roboto_Slab', 'sans-serif', 100, normal);
+
+
+
+html {
+  font-size: 62.5%; // =10px
+}
+
+body {
+  font-size: 15px;
+  font-size: $default-size;
+  @include RobotoSlabRegular;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	@include SourceSansProRegular;
+}
+
+h1, h2 {
+	padding: 20px 0;
+}
+
+h3, h4 {
+	padding: 10px 0;
+}
+
+// How to use:
+// p { font-size: fonts(p-size, small); }
+$palettes: (
+	p-size: (
+	  default: 1.5rem, // =15px
+	  small: 1.1rem, // =8px
+	  big: 1.6rem // =15px
+	)
+);
+

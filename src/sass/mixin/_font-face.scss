@@ -1,0 +1,77 @@
+// Font face mixin
+// ------------------
+
+@mixin font-face($font-family, $file-name, $family, $category, $font-weight, $font-style) {
+    $filepath: "/static/font/" + $family + "/" + $file-name;
+    @font-face {
+        font-family: "#{$font-family}";
+        src: url($filepath + ".eot");
+        src: url($filepath + ".eot?#iefix") format('embedded-opentype'), url($filepath + ".woff") format('woff'), url($filepath + ".ttf")  format('truetype'), url($filepath + ".svg#" + $font-family + "") format('svg');
+        font-weight: $font-weight;
+        font-style: $font-style;
+    }
+}
+
+
+// Source Sans Pro
+@mixin SourceSansProRegular {
+  font-family: 'SourceSansPro-Regular', 'SourceSansPro', serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin SourceSansProLight {
+  font-family: 'SourceSansPro-Light', 'SourceSansPro', serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@mixin SourceSansProItalic {
+  font-family: 'SourceSansPro-Italic', 'SourceSansPro', serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin SourceSansProLightItalic {
+  font-family: 'SourceSansPro-LightItalic', 'SourceSansPro', serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+@mixin SourceSansProBold {
+  font-family: 'SourceSansPro-Bold', 'SourceSansPro', serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@mixin SourceSansProExtraLight {
+  font-family: 'SourceSansPro-ExtraLight', 'SourceSansPro', serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+// Roboto Slab 
+@mixin RobotoSlabRegular {
+  font-family: 'RobotoSlab-Regular', 'RobotoSlab', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin RobotoSlabLight {
+  font-family: 'RobotoSlab-Light', 'RobotoSlab', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@mixin RobotoSlabBold {
+  font-family: 'RobotoSlab-Bold', 'RobotoSlab', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin RobotoSlabThin {
+  font-family: 'RobotoSlab-Thin', 'RobotoSlab', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}

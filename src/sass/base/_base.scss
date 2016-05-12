@@ -1,0 +1,77 @@
+
+// Basic and common style
+// -----------------------
+
+html {
+	height: 100%;
+}
+
+body {
+	color: $text-color;
+	height: 100%;
+	background-color: $beige;
+}
+
+*:focus {
+    outline: 0;
+}
+
+// Headers
+.title {
+	font-size: 2rem;
+	text-transform: uppercase;
+	margin-bottom: 40px;
+}
+
+
+// List 
+.list--inline {
+	display: flex;
+	flex-wrap: wrap;
+	@include breakpoint(tablet) {
+		flex-wrap: nowrap
+	}
+}
+
+// Links
+a {
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+
+img {
+	width: 100%;
+}
+
+
+#app {
+  padding: 20px 40px;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+// Buttons
+.btn {
+	border: 1px solid $link;
+	padding: 5px 7px;
+	background-color: transparent;
+
+	a {
+		color: $link;
+	}
+
+	&:hover {
+		background-color: $link;
+		padding: 5px 7px;
+
+		a {
+			color: $beige;
+		}
+	}
+}
+
+.btn-small {
+	font-size: 1.2rem
+}
+
