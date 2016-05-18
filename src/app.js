@@ -15,6 +15,7 @@ import AdminList from './admin-components/list';
 import Edit from './admin-components/edit';
 
 import './sass/main.scss';
+import './../static/font/font-awesome/scss/font-awesome.scss';
 
 const api = 'http://localhost:3000/api';
 const client = 'http://localhost:3001';
@@ -31,11 +32,11 @@ export default class App extends React.Component {
   }
 
   loadWines() {
-    const that = this;
+    const self = this;
 
     $.getJSON(this.props.route.winesUrl)
     .done(function (data) {
-      that.setState({
+      self.setState({
         wines: data
       });
     })
@@ -45,11 +46,11 @@ export default class App extends React.Component {
   }
 
   loadRegions() {
-    const that = this;
+    const self = this;
 
     $.getJSON(this.props.route.regionUrl)
     .done(function (data) {
-      that.setState({
+      self.setState({
         regions: data
       });
     })
@@ -59,11 +60,11 @@ export default class App extends React.Component {
   }
 
   loadCategories() {
-    const that = this;
+    const self = this;
 
     $.getJSON(this.props.route.catUrl)
     .done(function (data) {
-      that.setState({
+      self.setState({
         categories: data
       });
     })
@@ -76,40 +77,32 @@ export default class App extends React.Component {
     this.loadWines();
     this.loadRegions();
     this.loadCategories();
+    // console.log(this.props)
 
     // is the only way i found to reload the data so i can display new wine if added
     // but i have the idea that this solution can overload the server
+    /*
     let reloadWines = setInterval(() => {
       this.loadWines();
-    }, 3000);
+    }, 3000); 
+    */
   }
 
-  componentDidUnmount() {
+  /*
+  componentWillUnmount() {
     clearInterval(reloadWines);
   }
+  */
   
-  // can i do that?? 
   render() {
     return (
       <main>
-        {React.cloneElement(this.props.children, 
-          {
-            wines: this.state.wines,
-            regions: this.state.regions,
-            categories: this.state.categories
-          }
-        )}
-
-        {this.state.wines.map((wine) => React.cloneElement(this.props.children, {
-          id: wine.id,
-          title: wine.title,
-          description: wine.description,
-          producer: wine.producer,
-          profile_pic: wine.profile_pic,
-          thumb: wine.thumb,
-          category: wine.category,
-          region: wine.region
-        }))}
+        {React.cloneElement(this.props.children, {
+          wines: this.state.wines,
+          regions: this.state.regions,
+          categories: this.state.categories
+        })
+        }
       </main>
     ); 
   }
@@ -122,6 +115,23 @@ App.propTypes = {
   catUrl: React.PropTypes.string.isRequired
 };
 
+/*
+this.state.wines.map((wine) => 
+  React.cloneElement(this.props.children, 
+    {
+      key: wine.id,
+      id: wine.id,
+      title: wine.title,
+      description: wine.description,
+      producer: wine.producer,
+      profilePic: wine.profile_pic,
+      thumb: wine.thumb,
+      category: wine.category,
+      region: wine.region
+    }
+  )
+      )
+*/
 
 ReactDOM.render(
 

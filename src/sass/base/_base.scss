@@ -31,12 +31,24 @@ body {
 	@include breakpoint(tablet) {
 		flex-wrap: nowrap
 	}
+
+	li {
+		display: inline;
+	}
 }
 
 // Links
 a {
 	text-decoration: none;
-	text-transform: uppercase;
+}
+
+.smallLink {
+	color: $text-color;
+	cursor: pointer;
+	
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 
@@ -59,6 +71,7 @@ img {
 
 	a {
 		color: $link;
+		text-transform: uppercase;
 	}
 
 	&:hover {

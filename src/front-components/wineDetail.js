@@ -1,48 +1,64 @@
 import React from 'react';
-
 import ProfilePic from './common/profilePic';
+import './../sass/components/_detail.scss';
 
-const Detail = (props) => {
+export default class Detail extends React.Component {
+  
+  constructor(props){
+    super();
 
-  return (
-    <div>
+    this.findWine = this.findWine.bind(this);
+  }
 
-      <headgroup>
-        <h1>{props.title}</h1>
-        <div className='tag_box'>
-          <span>{props.category}</span>
-          <span>{props.region}</span>
-        </div>
-        <hr />
-      </headgroup>
+  findWine(wine) {
+    return wine.title === this.props.location.query.title
+  }
 
-      <main>
-        <div className='sidebar'>
-          <ProfilePic image={props.profilePic} />
-        </div>
-        <div className='container'>
-          <section>
-            <h3>Description</h3>
-            <p>{props.description}</p>
-          </section>
-          <section>
-            <h3>Producer</h3>
-            <p>{props.producer}</p>
-          </section>
-        </div>
-      </main>  
+  render() {
 
-    </div>
-  );
-};
+    const currentWine = this.props.wines.find(this.findWine);
+    return (
+      <div className='detail-comp'>
+        <headgroup>
+          <h1>{currentWine.title}</h1>
+          <div className='tag_boxes'>
+            <span>{currentWine.category}</span>
+            <span>{currentWine.region}</span>
+          </div>
+          <hr />
+        </headgroup>
+         <main>
+          <div className='sidebar'>
+            <ProfilePic image={currentWine.profilePic} />
+          </div>
+          <div className='container'>
+            <section>
+              <h3>Description</h3>
+              <p>{currentWine.description}</p>
+            </section>
+            <section>
+              <h3>Producer</h3>
+              <p>{currentWine.producer}</p>
+            </section>
+          </div>
+          </main>
+          <footer>
+            <div className='smallLink' onClick={this.context.router.goBack}> 
+              <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back 
+            </div>
+          </footer> 
+      </div>
+    );
+  }
+}
 
 Detail.propTypes = { 
-  title: React.PropTypes.string.isRequired,
-  profilePic: React.PropTypes.string.isRequired,
-  description: React.PropTypes.string.isRequired,
-  producer: React.PropTypes.string.isRequired,
-  category: React.PropTypes.string.isRequired,
-  region: React.PropTypes.string.isRequired
+  wines: React.PropTypes.array.isRequired
+};
+
+
+Detail.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default Detail;

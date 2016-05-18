@@ -1,33 +1,67 @@
+import _ from 'lodash';
 import React from 'react';
-import {Link} from 'react-router';
+import { Router, RouterContext, Link, browserHistory } from 'react-router';
+import CardThumb from './cardThumb.js';
 
-import Thumb from './common/thumb';
+export default class FrontList extends React.Component {
 
-const FrontList = (props) => {
+  constructor (props){
+    super();
+  }
 
-  // How can i show the list of wines just from a certain category?
-  const description = props.description;
-  const title = props.title;
-  const titleUrl = title.replace(/ /g, '-');
-  const trunc = description.substr(0, 16) + '\u2026';
+  render() {
+    let wines = this.props.wines;
+    // i cannot make both category and all wines work together
+    if (this.props.location.query) {
+      wines = wines.filter(item => item.category === this.props.location.query.name);
+    } else {
+      wines = this.props.wines;
+    }
 
-  return (
-    <li key={props.id}>
-      <Link to={{ pathname: `${titleUrl}` }}> 
-        <Thumb image={props.thumb} />
-        <h3>{title}</h3>
-        <p>{trunc}</p>
-      </Link>
-    </li>
-  );
-  // how do i do the grid here?
-};
+    const cards = wines.map(wine => {
+      const description = wine.description;
+      const title = wine.title;
+      const titleUrl = title.replace(/ /g, '-');
+      const trunc = description.substr(0, 100) + '\u2026';
+
+      return (
+        <CardThumb key={wine.id} id={wine.id} titleUrl={titleUrl} title={wine.title} thumb={wine.thumb} readmore={trunc} />
+      );
+    });
+
+    console.log(wines);
+    if (_.isEmpty(wines)) {
+      return (
+        <div>
+         <p> Sorry, no wines was found in this category. </p>
+         <footer>
+            <div className='smallLink' onClick={this.context.router.goBack}> 
+              <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back 
+            </div>
+          </footer>
+        </div>
+      );
+    } 
+
+    return (
+      <section className='frontList-comp'>
+        <ul className='list--inline'>
+          {cards}      
+        </ul>
+        <footer>
+          <div className='smallLink' onClick={this.context.router.goBack}> 
+            <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back 
+          </div>
+        </footer>
+      </section>
+    );
+  }
+}
 
 FrontList.propTypes = { 
-  id: React.PropTypes.number.isRequired,
-  title: React.PropTypes.string.isRequired,
-  thumb: React.PropTypes.string.isRequired,
-  description: React.PropTypes.string.isRequired
+  wines: React.PropTypes.array.isRequired
 };
 
-export default FrontList;
+FrontList.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};

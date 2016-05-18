@@ -11,9 +11,10 @@ const Home = (props) => {
     let name = cat.name;
     let nameCorrect = name.replace(/-/g, '');
     
+    // any way i can show /wines/categoryName?
     return (
       <li key={cat.id}>
-        <Link to={{ pathname: `/wines/${cat.name}` }}>
+        <Link to={{ pathname: '/wines', query: {name} }}>
           <span> <img src={cat.logo} alt={nameCorrect} /> </span>
         </Link>
       </li>

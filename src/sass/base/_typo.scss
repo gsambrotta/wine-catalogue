@@ -3,7 +3,7 @@
 
 
 // Font size
-$default-size: 1.5rem;
+$default-size: 1.2rem;
 
 // Import fonts type
 // Source Sans Pro
@@ -29,7 +29,7 @@ html {
 }
 
 body {
-  font-size: 15px;
+  font-size: 12px;
   font-size: $default-size;
   @include RobotoSlabRegular;
 }
@@ -46,12 +46,31 @@ h3, h4 {
 	padding: 10px 0;
 }
 
+p {
+	text-align: justify;
+}
+
+h1 {
+	font-size: 24px;
+	font-size: 2.4rem;
+}
+
+h2 {
+	font-size: 10px;
+	font-size: 2rem;
+}
+
+h3 {
+	font-size: 18px;
+	font-size: 1.8rem;
+}
+
 // How to use:
 // p { font-size: fonts(p-size, small); }
 $palettes: (
 	p-size: (
-	  default: 1.5rem, // =15px
-	  small: 1.1rem, // =8px
+	  default: 1.2rem, // =15px
+	  small: 0.8rem, // =8px
 	  big: 1.6rem // =15px
 	)
 );

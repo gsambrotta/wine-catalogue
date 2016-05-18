@@ -4,13 +4,13 @@ const ProfilePic = (props) => {
 
   return (
     <div className='profile-pic'>
-      <img src={props.profilePic} />
+      <img src={props.image} />
     </div>
   );
 };
 
 ProfilePic.propTypes = { 
-  profilePic: React.PropTypes.string.isRequired  
+  image: React.PropTypes.string.isRequired  
 };
 
 export default ProfilePic;

@@ -1,0 +1,23 @@
+
+.wineThumbCard {
+	width: 200px;
+  padding: 20px 20px 10px;
+
+  &:hover {
+  	background: #CCC8BF;
+  	border-radius: 2px;
+  }
+
+	h2 {
+		color: black;
+		font-size: 1.5rem;
+    font-weight: 700;
+    min-height: 30px;
+	}
+
+	p {
+		color: black;
+		word-spacing: -1;
+		font-style: italic;
+	}
+}

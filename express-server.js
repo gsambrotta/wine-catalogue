@@ -30,7 +30,8 @@ module.exports = (PORT) => {
 
     // Disable caching
     res.setHeader('Cache-Control', 'no-cache');
-    res.status(404).send('Page not found');
+    // 1_ Don't i need something like this?
+    //res.status(404).send('Page not found');
     next();
   });
 
@@ -85,10 +86,10 @@ module.exports = (PORT) => {
   app.post('/api/wines', jsonParser, function (req, res) {
     if (!req.body) return res.sendStatus(400)
     // req.body
-    // Not sure how should i do here 
+    // 2_ Not sure how should i do here 
     // Also, how can i tell to it, in which file it should write?
     console.log(req.body);
-    
+
     const id = Date.now();
     const title = req.body.title;
     const description = req.body.description;
@@ -97,7 +98,6 @@ module.exports = (PORT) => {
     const profile_pic = req.body.profile_pic;
     const category = req.body.category;
     const region = req.body.region;
-    
     res.status(202);
     res.end("yes");
   })
@@ -120,7 +120,6 @@ module.exports = (PORT) => {
         process.exit(1);
       }
       let wines = JSON.parse(data);
-
       // new object properties
       let newWine = {
         id: Date.now(),
@@ -132,7 +131,6 @@ module.exports = (PORT) => {
         category: req.body.category,
         region: req.body.region
       };
-
       wines.push(newWine);
       fs.writeFile(wineData, JSON.stringify(wines, null, 4), function (error) {
         if (error) {
@@ -154,5 +152,3 @@ module.exports = (PORT) => {
     console.log('Express listening at ' + PORT);
   });
 };
-
-

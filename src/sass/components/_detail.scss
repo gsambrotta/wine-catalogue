@@ -1,0 +1,45 @@
+@import '../base/colors';
+
+.detail-comp {
+	h1 {
+		width: 60%;
+		float: left;
+		padding: 20px 0 5px;
+	}
+
+	h1, h3 {
+		color: $green;
+	}
+
+	.tag_boxes {
+		padding-top: 25px;
+    line-height: 2rem;
+    text-align: right;
+
+    span {
+    	padding: 3px 10px;
+	    margin: 0 4px;
+	    background: $green;
+	    font-family: sans-serif;
+	    text-transform: uppercase;
+	    color: white;
+	    font-size: 1rem;
+	    }
+	}
+
+	main {
+		display: flex;
+		margin-top: 30px;
+
+		.sidebar {
+			margin-right: 30px;
+		}
+
+		.container {
+			section {
+				padding: 0 0 30px;
+				max-width: 900px;
+			}
+		}
+	}
+}

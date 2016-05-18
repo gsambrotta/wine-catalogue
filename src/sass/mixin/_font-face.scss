@@ -6,7 +6,7 @@
     @font-face {
         font-family: "#{$font-family}";
         src: url($filepath + ".eot");
-        src: url($filepath + ".eot?#iefix") format('embedded-opentype'), url($filepath + ".woff") format('woff'), url($filepath + ".ttf")  format('truetype'), url($filepath + ".svg#" + $font-family + "") format('svg');
+        src: url($filepath + ".eot?#iefix") format('embedded-opentype'), url($filepath + ".ttf")  format('truetype'), url($filepath + ".svg#" + $font-family + "") format('svg');
         font-weight: $font-weight;
         font-style: $font-style;
     }
