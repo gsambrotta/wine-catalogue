@@ -30,8 +30,6 @@ module.exports = (PORT) => {
 
     // Disable caching
     res.setHeader('Cache-Control', 'no-cache');
-    // 1_ Don't i need something like this?
-    //res.status(404).send('Page not found');
     next();
   });
 
@@ -85,64 +83,48 @@ module.exports = (PORT) => {
   // Write datas
   app.post('/api/wines', jsonParser, function (req, res) {
     if (!req.body) return res.sendStatus(400)
-    // req.body
-    // 2_ Not sure how should i do here 
-    // Also, how can i tell to it, in which file it should write?
     console.log(req.body);
 
     const id = Date.now();
-    const title = req.body.title;
-    const description = req.body.description;
-    const producer = req.body.producer;
-    const thumb = req.body.thumb;
-    const profile_pic = req.body.profile_pic;
-    const category = req.body.category;
-    const region = req.body.region;
+    const previousWines = JSON.parse(fs.readFileSync(wineData));
+
+    if (_.find(previousWines, wine => wine.id === id) {
+      // update existing wine
+    } else {
+      fs.writeFile(wineData, JSON.stringify([
+        ...previousWines,
+        {
+          ...req.body, // req.body = {id: 1, title: 2} ==> id: 1, title: 2
+          id
+        }
+      ]));
+    }
+
     res.status(202);
-    res.end("yes");
+    res.end("new wine posted");
   })
 
   app.post('/api/categories', jsonParser, function (req, res) {
     if (!req.body) return res.sendStatus(400)
     // req.body
     console.log(req.body);
+    const previousCat = JSON.parse(fs.readFileSync(categoriesData));
+    if (_.find(previousCat, cat => cat.id === id) {
+      // update existing wine
+    } else {
+      fs.writeFile(categoriesData, JSON.stringify([
+        ...previousCat,
+        {
+          ...req.body // req.body = {id: 1, title: 2} ==> id: 1, title: 2
+        }
+      ]));
+    }
+
     res.status(202);
-    //res.send();
-    res.end("yes");
+    res.end("new category posted");
   })
 
-  /*
-  // Here it write on api
-  app.post('/api', function (req, res) {
-    fs.readFile(wineData, function (err, data) {
-      if (err) {
-        console.error(err);
-        process.exit(1);
-      }
-      let wines = JSON.parse(data);
-      // new object properties
-      let newWine = {
-        id: Date.now(),
-        title: req.body.title,
-        description: req.body.description,
-        producer: req.body.producer,
-        thumb: req.body.thumb,
-        profile_pic: req.body.profile_pic,
-        category: req.body.category,
-        region: req.body.region
-      };
-      wines.push(newWine);
-      fs.writeFile(wineData, JSON.stringify(wines, null, 4), function (error) {
-        if (error) {
-          console.error(error);
-          process.exit(1);
-        }
-        res.json(wines);
-      });
-    });
-  });
-  */
-
+  
   // Finally, listen to the port
   app.listen(PORT, function (err) {
     if (err) { 

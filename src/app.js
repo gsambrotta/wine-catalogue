@@ -109,29 +109,9 @@ export default class App extends React.Component {
 }
 
 App.propTypes = { 
-  children: React.PropTypes.object.isRequired,
-  winesUrl: React.PropTypes.string.isRequired,
-  regionUrl: React.PropTypes.string.isRequired,
-  catUrl: React.PropTypes.string.isRequired
+  children: React.PropTypes.object.isRequired
 };
 
-/*
-this.state.wines.map((wine) => 
-  React.cloneElement(this.props.children, 
-    {
-      key: wine.id,
-      id: wine.id,
-      title: wine.title,
-      description: wine.description,
-      producer: wine.producer,
-      profilePic: wine.profile_pic,
-      thumb: wine.thumb,
-      category: wine.category,
-      region: wine.region
-    }
-  )
-      )
-*/
 
 ReactDOM.render(
 
@@ -145,6 +125,7 @@ ReactDOM.render(
     <Route path='/' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>
       <IndexRoute component={Home}/>
       <Route path='wines' component={FrontList}/>
+      <Route path='wines/:winesCategory' component={FrontList}/>
       <Route path=':wines' component={Detail}/>
     </Route>    
 

@@ -14,7 +14,7 @@ const Home = (props) => {
     // any way i can show /wines/categoryName?
     return (
       <li key={cat.id}>
-        <Link to={{ pathname: '/wines', query: {name} }}>
+        <Link to={{ pathname: `/wines/${name}` }}>
           <span> <img src={cat.logo} alt={nameCorrect} /> </span>
         </Link>
       </li>

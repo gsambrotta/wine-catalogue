@@ -11,15 +11,20 @@ export default class FrontList extends React.Component {
 
   render() {
     let wines = this.props.wines;
-    // i cannot make both category and all wines work together
-    if (this.props.location.query) {
-      wines = wines.filter(item => item.category === this.props.location.query.name);
+    const {
+      params: {
+        winesCategory
+      }
+    } = this.props;
+
+    if (winesCategory) {
+      wines = wines.filter(item => item.category === winesCategory);
     } else {
       wines = this.props.wines;
     }
 
     const cards = wines.map(wine => {
-      const description = wine.description;
+      const description = wine.description || '';
       const title = wine.title;
       const titleUrl = title.replace(/ /g, '-');
       const trunc = description.substr(0, 100) + '\u2026';
