@@ -14,9 +14,18 @@ module.exports = (PORT) => {
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:' + expressPort 
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.jsx?$/,
+          loaders: ['babel'],
+          include: config.output.publicPath
+        }
+      ]
     }
-  });
-  
+    });
+    
   server.listen(PORT, 'localhost', function (err) {
     if (err) {
       console.log(err);

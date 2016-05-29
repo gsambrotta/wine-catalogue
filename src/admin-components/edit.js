@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export default class Edit extends React.Component {
   constructor(props) {
     super();
@@ -9,7 +10,7 @@ export default class Edit extends React.Component {
   render() {
     return (
       <div>
-        Admin edit
+        This is the edit page
       </div>
     );
   }

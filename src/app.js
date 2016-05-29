@@ -2,7 +2,7 @@
 /* global client */
 /* global api */
 
-import React from 'react';
+import React from 'react/dist/react-with-addons';
 import ReactDOM from 'react-dom';
 import {Route, IndexRoute, Router, browserHistory} from 'react-router';
 import $ from 'jquery';
@@ -73,34 +73,43 @@ export default class App extends React.Component {
     });
   }
 
+
+  // Doesn't delete nothing :(
+  deleteCallback(index) {
+    console.log(index);
+    this.setState({
+      wines: React.addons.update(this.state.wines, {$splice: [[index, 1]] })
+    }) 
+    console.log('deleted!');
+    this.loadWines(); 
+  }
+
   componentDidMount() {
     this.loadWines();
     this.loadRegions();
     this.loadCategories();
-    // console.log(this.props)
 
     // is the only way i found to reload the data so i can display new wine if added
     // but i have the idea that this solution can overload the server
-    /*
     let reloadWines = setInterval(() => {
       this.loadWines();
-    }, 3000); 
-    */
+    }, 20000); 
+    
   }
 
-  /*
+  
   componentWillUnmount() {
     clearInterval(reloadWines);
   }
-  */
-  
+    
   render() {
     return (
       <main>
         {React.cloneElement(this.props.children, {
           wines: this.state.wines,
           regions: this.state.regions,
-          categories: this.state.categories
+          categories: this.state.categories,
+          deleteCallback: this.deleteCallback.bind(this)
         })
         }
       </main>
@@ -117,7 +126,7 @@ ReactDOM.render(
 
   <Router history={browserHistory}>
 
-     <Route path='/admin' component={App}>
+     <Route path='/admin' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>
       <IndexRoute component={AdminList}/>
       <Route path='wines' component={Edit}/>
     </Route>

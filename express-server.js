@@ -88,13 +88,13 @@ module.exports = (PORT) => {
     const id = Date.now();
     const previousWines = JSON.parse(fs.readFileSync(wineData));
 
-    if (_.find(previousWines, wine => wine.id === id) {
+    if (_.find(previousWines, wine => wine.id === id)) {
       // update existing wine
     } else {
       fs.writeFile(wineData, JSON.stringify([
         ...previousWines,
         {
-          ...req.body, // req.body = {id: 1, title: 2} ==> id: 1, title: 2
+          //...req.body, // req.body = {id: 1, title: 2} ==> id: 1, title: 2
           id
         }
       ]));
@@ -109,13 +109,13 @@ module.exports = (PORT) => {
     // req.body
     console.log(req.body);
     const previousCat = JSON.parse(fs.readFileSync(categoriesData));
-    if (_.find(previousCat, cat => cat.id === id) {
+    if (_.find(previousCat, cat => cat.id === id)) {
       // update existing wine
     } else {
       fs.writeFile(categoriesData, JSON.stringify([
         ...previousCat,
         {
-          ...req.body // req.body = {id: 1, title: 2} ==> id: 1, title: 2
+          //...req.body // req.body = {id: 1, title: 2} ==> id: 1, title: 2
         }
       ]));
     }

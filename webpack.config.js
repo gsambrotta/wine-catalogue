@@ -17,6 +17,16 @@ const config = {
     filename: 'bundle.js'
   },
 
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.md', '.css', '.png', '.jpg']
+  },
+
+  resolveLoader: {
+    alias: {
+      markdown: path.join(__dirname, 'loaders/markdown') 
+    }
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
@@ -30,7 +40,8 @@ const config = {
     loaders: [
       { test: /\.jsx?/, loaders: ['react-hot', 'babel'], exclude: /node_modules/ },
       { test: /\.scss$/, loaders: ['style', 'css', 'sass'] },
-      { test: /\.css$/, loader: 'style!css?sourceMap' }, 
+      { test: /\.css$/, loader: 'style!css?sourceMap' },
+      { test: /\.md$/, loaders: ['html', 'markdown'] },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
       { test: /\.(jpe?g|png|gif|svg)$/i, loaders: [ 'url?limit=8192', 'img'] }
