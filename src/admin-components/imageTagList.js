@@ -7,6 +7,10 @@ const imageTagList = (props) => {
   );
 };
 
+imageTagList.propTypes = { 
+  data: React.PropTypes.string
+};
+
 
 export default imageTagList;
 

@@ -4,14 +4,14 @@ import './../sass/components/_detail.scss';
 
 export default class Detail extends React.Component {
   
-  constructor(props){
+  constructor(props) {
     super();
 
     this.findWine = this.findWine.bind(this);
   }
 
   findWine(wine) {
-    return wine.title === this.props.location.query.title
+    return wine.title === this.props.location.query.title;
   }
 
   render() {

@@ -12,7 +12,7 @@ import FrontList from './front-components/list';
 import Detail from './front-components/wineDetail';
 
 import AdminList from './admin-components/list';
-import Edit from './admin-components/edit';
+import EditWrap from './admin-components/editWrap';
 
 import './sass/main.scss';
 import './../static/font/font-awesome/scss/font-awesome.scss';
@@ -73,13 +73,28 @@ export default class App extends React.Component {
     });
   }
 
+  onEditSave(wineEdited) {
+    console.log(wineEdited);
+    const url = `${api}/wines:${wineEdited.id}`;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      data: wineEdited,
+      success: function(data) {
+        this.setState({wines: wineEdited}) // need to push/rewrite the wines array
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }
+    })
+  }
 
   // Doesn't delete nothing :(
   deleteCallback(index) {
-    console.log(index);
     this.setState({
       wines: React.addons.update(this.state.wines, {$splice: [[index, 1]] })
-    }) 
+    }); 
     console.log('deleted!');
     this.loadWines(); 
   }
@@ -91,7 +106,7 @@ export default class App extends React.Component {
 
     // is the only way i found to reload the data so i can display new wine if added
     // but i have the idea that this solution can overload the server
-    let reloadWines = setInterval(() => {
+    const reloadWines = setInterval(() => {
       this.loadWines();
     }, 20000); 
     
@@ -109,7 +124,8 @@ export default class App extends React.Component {
           wines: this.state.wines,
           regions: this.state.regions,
           categories: this.state.categories,
-          deleteCallback: this.deleteCallback.bind(this)
+          deleteCallback: this.deleteCallback.bind(this),
+          onEditSave: this.onEditSave.bind(this)
         })
         }
       </main>
@@ -128,7 +144,7 @@ ReactDOM.render(
 
      <Route path='/admin' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>
       <IndexRoute component={AdminList}/>
-      <Route path='wines' component={Edit}/>
+      <Route path='/admin/edit/:wineId' component={EditWrap}/>
     </Route>
 
     <Route path='/' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>

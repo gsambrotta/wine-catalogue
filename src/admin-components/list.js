@@ -1,6 +1,6 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 import Griddle from 'griddle-react';
-import $ from 'jquery';
 
 import ImageTagList from './imageTagList';
 import ModifyWineStatus from './modifyWineStatus';
@@ -16,11 +16,11 @@ export default class AdminList extends React.Component {
     let wines = this.props.wines;
     wines.map(wine => (
       wine['actions'] = ''
-    ))
+    ));
   }
 
-  editCallback() {
-    console.log('edit it');
+  editCallback(e) {
+    browserHistory.push(`/admin/edit/${e}`);
   }
 
   // list of wines
@@ -63,11 +63,11 @@ export default class AdminList extends React.Component {
         displayName: 'Actions',
         sortable: false,
         cssClassName: 'actions-cell',
-        deleteCallback : this.props.deleteCallback,
-        editCallback : this.editCallback,
+        deleteCallback: this.props.deleteCallback,
+        editCallback: this.editCallback,
         customComponent: ModifyWineStatus
       }
-    ]
+    ];
 
 
     return (
@@ -81,6 +81,8 @@ export default class AdminList extends React.Component {
 }
 
 
-AdminList.propTypes = { };
+AdminList.propTypes = { 
+  wines: React.PropTypes.array
+};
 
 

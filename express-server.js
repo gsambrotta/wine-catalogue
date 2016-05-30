@@ -81,7 +81,7 @@ module.exports = (PORT) => {
 
 
   // Write datas
-  app.post('/api/wines', jsonParser, function (req, res) {
+  app.post('/api/wines:id', jsonParser, function (req, res) {
     if (!req.body) return res.sendStatus(400)
     console.log(req.body);
 
