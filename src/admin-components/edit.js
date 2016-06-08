@@ -21,8 +21,8 @@ export default class Edit extends React.Component {
         $(`.${category.name}`).addClass('selected-tag');
       }
       return (
-        <button key={category.id} className={category.name} onClick={this.setTagClass.bind(this)}> 
-          {category.name} 
+        <button key={category.id} className={category.name} onClick={this.setTagClass.bind(this)}>
+          {category.name}
         </button>
       );
     });
@@ -38,9 +38,10 @@ export default class Edit extends React.Component {
     $('.tags button').removeClass('selected-tag');
     $(target).addClass('selected-tag');
 
+    console.log($('.selected-tag').text());
     this.setState({
       category: $('.selected-tag').text()
-    }) 
+    })
   }
 
 
@@ -51,7 +52,6 @@ export default class Edit extends React.Component {
         <option key={region} value={region}> {region} </option>
       );
     });
-
     return regionsOption;
   }
 
@@ -104,13 +104,13 @@ export default class Edit extends React.Component {
       return;
     }
 
-    this.props.onEditSave({ 
-      id: this.props.wine.id, 
+    this.props.onEditSave({
+      id: this.props.wine.id,
       title,
       description,
       producer,
       category,
-      region 
+      region
     });
   }
 
@@ -120,8 +120,8 @@ export default class Edit extends React.Component {
     return (
       <form className='edit-comp' onSubmit={this.handleSubmit.bind(this)}>
         <header>
-          <div className='smallLink' onClick={this.context.router.goBack}> 
-            <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back 
+          <div className='smallLink' onClick={this.context.router.goBack}>
+            <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back
           </div>
         </header>
 
@@ -147,19 +147,19 @@ export default class Edit extends React.Component {
           </div>
 
           <div className='form-group'>
-            <select value={this.props.wine.region} onChange={this.handleEditRegion.bind(this)}> 
-              {this.showRegionSelect(this.props.wine)}
-            </select> 
+            <select value={this.state.region} onChange={this.handleEditRegion.bind(this)}>
+              {this.showRegionSelect()}
+            </select>
           </div>
 
           <div className='form-group tags'>
-            {this.showCategoryTag(this.props.wine)}
+            {this.showCategoryTag()}
           </div>
 
         </main>
 
         <footer>
-          <div className='smallLink' onClick={this.context.router.goBack}> 
+          <div className='smallLink' onClick={this.context.router.goBack}>
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back (did you save?)
           </div>
 
@@ -170,13 +170,13 @@ export default class Edit extends React.Component {
           <div className='save'>
             <button> Save </button>
           </div>
-        </footer> 
+        </footer>
       </form>
     );
   }
 }
 
-Edit.propTypes = { 
+Edit.propTypes = {
   wine: React.PropTypes.array.isRequired,
   categories: React.PropTypes.array.isRequired,
   regions: React.PropTypes.array.isRequired
