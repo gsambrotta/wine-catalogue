@@ -11,7 +11,7 @@ export default class AdminList extends React.Component {
     super();
   }
 
-  
+
   addActionCloumn() {
     let wines = this.props.wines;
     wines.map(wine => (
@@ -81,7 +81,7 @@ export default class AdminList extends React.Component {
 }
 
 
-AdminList.propTypes = { 
+AdminList.propTypes = {
   wines: React.PropTypes.array
 };
 
