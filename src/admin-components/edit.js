@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import ImageUpload from './common/imageUpload.js';
+
 
 export default class Edit extends React.Component {
   constructor(props) {
@@ -41,7 +43,7 @@ export default class Edit extends React.Component {
     console.log($('.selected-tag').text());
     this.setState({
       category: $('.selected-tag').text()
-    })
+    });
   }
 
 
@@ -88,7 +90,7 @@ export default class Edit extends React.Component {
       producer: this.props.wine.producer,
       category: this.props.wine.category,
       region: this.props.wine.region
-    })
+    });
 
   }
 
@@ -100,7 +102,7 @@ export default class Edit extends React.Component {
     let producer = this.state.producer.trim();
     let category = this.state.category;
     let region = this.state.region;
-    if(!title || !description || !producer || !category || !region) {
+    if (!title || !description || !producer || !category || !region) {
       return;
     }
 
@@ -127,7 +129,7 @@ export default class Edit extends React.Component {
 
         <main>
           <div className='form-group'>
-            Image upload
+
           </div>
 
           <div className='form-group'>
@@ -168,7 +170,7 @@ export default class Edit extends React.Component {
           </div>
 
           <div className='save'>
-            <button> Save </button>
+            <button type='submit'> Save </button>
           </div>
         </footer>
       </form>
@@ -179,7 +181,8 @@ export default class Edit extends React.Component {
 Edit.propTypes = {
   wine: React.PropTypes.array.isRequired,
   categories: React.PropTypes.array.isRequired,
-  regions: React.PropTypes.array.isRequired
+  regions: React.PropTypes.array.isRequired,
+  //onEditSave: React.propTypes.function.isRequired
 };
 
 Edit.contextTypes = {
