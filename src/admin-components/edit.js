@@ -120,6 +120,12 @@ export default class Edit extends React.Component {
     // console.log(this.props);
 
     return (
+      <div>
+      
+      <div className='form-group'>
+        <ImageUpload id={this.state.id} name={this.state.title} />
+      </div>
+
       <form className='edit-comp' onSubmit={this.handleSubmit.bind(this)}>
         <header>
           <div className='smallLink' onClick={this.context.router.goBack}>
@@ -128,9 +134,6 @@ export default class Edit extends React.Component {
         </header>
 
         <main>
-          <div className='form-group'>
-
-          </div>
 
           <div className='form-group'>
             <input type='text' value={this.state.title} onChange={this.handleEditTitle.bind(this)}/>
@@ -174,6 +177,7 @@ export default class Edit extends React.Component {
           </div>
         </footer>
       </form>
+      </div>
     );
   }
 }
@@ -181,7 +185,7 @@ export default class Edit extends React.Component {
 Edit.propTypes = {
   wine: React.PropTypes.array.isRequired,
   categories: React.PropTypes.array.isRequired,
-  regions: React.PropTypes.array.isRequired,
+  regions: React.PropTypes.array.isRequired
   //onEditSave: React.propTypes.function.isRequired
 };
 

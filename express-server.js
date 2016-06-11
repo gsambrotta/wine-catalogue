@@ -8,6 +8,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const bl = require('bl');
 const _ = require('lodash');
+const multer  =   require('multer');
 
 module.exports = (PORT) => {
   
@@ -17,6 +18,18 @@ module.exports = (PORT) => {
 
   const app = express();
   const jsonParser = bodyParser.json();
+
+  const storage =   multer.diskStorage({
+    destination: function (req, file, callback) {
+      callback(null, './uploads');
+    },
+
+    filename: function (req, file, callback) {
+      callback(null, file.fieldname + '-' + Date.now());
+    }
+
+  });
+  const upload = multer({ storage : storage});
 
   app.use(serveStatic(__dirname + '/build'));
   app.use(jsonParser);
@@ -79,6 +92,11 @@ module.exports = (PORT) => {
     });
   })
 
+  app.get('/',function(req, res){
+    console.log(req.files); // userPhoto array
+    //res.sendfile(path.resolve('./api/images/image.jpg');
+    //res.sendFile(__dirname + "/index.html");
+  });
 
   // Write datas
   app.post('/api/wines:id', jsonParser, function (req, res) {
@@ -106,11 +124,11 @@ module.exports = (PORT) => {
 
   app.post('/api/categories', jsonParser, function (req, res) {
     if (!req.body) return res.sendStatus(400)
-    // req.body
     console.log(req.body);
+
     const previousCat = JSON.parse(fs.readFileSync(categoriesData));
     if (_.find(previousCat, cat => cat.id === id)) {
-      // update existing wine
+      // update existing category
     } else {
       fs.writeFile(categoriesData, JSON.stringify([
         ...previousCat,
@@ -123,6 +141,17 @@ module.exports = (PORT) => {
     res.status(202);
     res.end("new category posted");
   })
+
+  // Image upload
+  app.post('/api/images', upload.single(file.fieldname) function(req, res){
+    upload(req, res, function(err) {
+      if(err) {
+        return res.end("Error uploading file.");
+      }
+      console.log(req.files) // I should see image array!
+      res.end("msg form express: File is uploaded");
+    });
+  });
 
   
   // Finally, listen to the port

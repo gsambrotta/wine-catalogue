@@ -2,12 +2,14 @@ import React from 'react';
 import {bindAll} from 'lodash';
 import $ from 'jquery';
 
+const api = 'http://localhost:3000/api';
+
 export default class ImageUpload extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      dataUri: null,
+      uploaded: false,
       processing: false
     };
 
@@ -17,12 +19,15 @@ export default class ImageUpload extends React.Component {
   handleFile(e) {
     const reader = new FileReader();
     const file = e.target.files[0];
+    const target = e.target;
 
+    console.log(file.name);
     reader.onload = (upload) => {
       this.setState({
-        dataUri: upload.target.result,
+        // dataUri: upload.target.result,
         filename: file.name,
-        filetype: file.type
+        // filetype: file.type
+        fieldName: $(target).attr('name') //userPhoto
       });
     };
     // read content of specific Blob once finished
@@ -38,21 +43,29 @@ export default class ImageUpload extends React.Component {
       processing: true
     });
 
+    const url = `${api}/images`;
     const promise = $.ajax({
-      url: 'api/v1/image',
+      url: url,
       type: 'POST',
-      dataType: 'json',
       data: {
-        dataUri: this.state.dataUri,
+        // dataUri: this.state.dataUri,
         filename: this.state.filename,
-        filetype: this.state.filetype
+        fieldName: this.state.fieldName
+        // filetype: this.state.filetype
+      },
+      success: function (data) {
+        console.log(data)
+        console.log('success!')
+      },
+      error: function (xhr, status, err) {
+        console.error(url, status, err.toString());
       }
     });
 
     promise.done(data => {
       self.setState({
         processing: false,
-        uploaded_uri: data.uri
+        uploaded: true
       });
     });
   }
@@ -61,12 +74,12 @@ export default class ImageUpload extends React.Component {
     let processing;
     let uploaded;
 
-    if (this.state.uploaded_uri) {
+    if (this.state.uploaded) {
       uploaded = (
-        <div>
+        <div id='status'>
           <h3> Image uploaded! </h3>
-          <img src={this.state.uploaded_uri}/>
-          <pre>{this.state.uploaded_uri}</pre>
+          <img src='file/path'/> 
+          <pre> file/path </pre>
         </div>
       );
     }
@@ -79,8 +92,8 @@ export default class ImageUpload extends React.Component {
       <div>
         <label> Upload an image </label>
         <form onSubmit={this.handleSubmit} encTYpe='multipart/form-data'>
-          <input type='file' onChange={this.handleFile} />
-          <input type='submit' value='Update' disable={this.state.processing} />
+          <input type='file' id={this.props.id} name={this.props.name} onChange={this.handleFile} />
+          <input type='submit' value='Upload Image' name='submit' disable={this.state.processing} />
         </form>
         {uploaded}
       </div>
