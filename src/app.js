@@ -6,6 +6,7 @@ import React from 'react/dist/react-with-addons';
 import ReactDOM from 'react-dom';
 import {Route, IndexRoute, Router, browserHistory} from 'react-router';
 import $ from 'jquery';
+import _ from 'lodash';
 
 import Home from './front-components/home';
 import FrontList from './front-components/list';
@@ -19,6 +20,10 @@ import './../static/font/font-awesome/scss/font-awesome.scss';
 
 const api = 'http://localhost:3000/api';
 const client = 'http://localhost:3001';
+
+// Debugging
+window.jQuery = $;
+////////
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,6 +41,7 @@ export default class App extends React.Component {
 
     $.getJSON(this.props.route.winesUrl)
     .done(function (data) {
+      console.log('Successfully received data from the server, updating state with:', data);
       self.setState({
         wines: data
       });
@@ -74,49 +80,53 @@ export default class App extends React.Component {
   }
 
   onEditSave(wineEdited) {
-    console.log(wineEdited);
-    const url = `${api}/wines:${wineEdited.id}`;
-    $.ajax({
+    const url = `${api}/wines/${wineEdited.id}`;
+    const req = $.ajax({
       url: url,
       dataType: 'json',
       type: 'POST',
-      data: wineEdited,
-      success: function(data) {
-        this.setState({wines: wineEdited}) // need to push/rewrite the wines array
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }
-    })
+      data: wineEdited
+    });
+
+    req.done(() => {
+      // this.setState({wines: wineEdited})
+      console.log('Successfully edit a wine, fetching data from the server once again');
+      this.loadWines();
+    });
+
+    req.fail((xhr, status, err) => {
+      console.error(url, status, err.toString());
+    });
   }
 
   // Doesn't delete nothing :(
-  deleteCallback(index) {
-    this.setState({
-      wines: React.addons.update(this.state.wines, {$splice: [[index, 1]] })
-    }); 
-    console.log('deleted!');
-    this.loadWines(); 
+  deleteCallback(id) {
+    console.log('wine id to be deleted ' + id);
+    const url = `${api}/wines/${id}`;
+    console.log('wine url to be deleted ' + url);
+    const req = $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'DELETE'
+    });
+
+    req.done(() => {
+      console.log('Successfully deleted a wine, fetching data from the server once again');
+      this.loadWines();
+    });
+
+    req.fail((xhr, status, err) => {
+      console.error(url, status, err.toString());
+    });
   }
 
   componentDidMount() {
     this.loadWines();
     this.loadRegions();
     this.loadCategories();
-
-    // is the only way i found to reload the data so i can display new wine if added
-    // but i have the idea that this solution can overload the server
-    const reloadWines = setInterval(() => {
-      this.loadWines();
-    }, 20000); 
-    
   }
 
-  
-  componentWillUnmount() {
-    clearInterval(reloadWines);
-  }
-    
+
   render() {
     return (
       <main>
@@ -129,11 +139,11 @@ export default class App extends React.Component {
         })
         }
       </main>
-    ); 
+    );
   }
 }
 
-App.propTypes = { 
+App.propTypes = {
   children: React.PropTypes.object.isRequired
 };
 
@@ -152,7 +162,7 @@ ReactDOM.render(
       <Route path='wines' component={FrontList}/>
       <Route path='wines/:winesCategory' component={FrontList}/>
       <Route path=':wines' component={Detail}/>
-    </Route>    
+    </Route>
 
   </Router>,
 

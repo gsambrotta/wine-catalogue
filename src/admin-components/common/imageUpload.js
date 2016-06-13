@@ -27,7 +27,7 @@ export default class ImageUpload extends React.Component {
         // dataUri: upload.target.result,
         filename: file.name,
         // filetype: file.type
-        fieldName: $(target).attr('name') //userPhoto
+        fieldName: $(target).attr('name')
       });
     };
     // read content of specific Blob once finished
@@ -46,14 +46,16 @@ export default class ImageUpload extends React.Component {
     const promise = $.ajax({
       url: url,
       type: 'POST',
+      /*
       data: {
         // dataUri: this.state.dataUri,
         filename: this.state.filename,
         fieldName: this.state.fieldName
         // filetype: this.state.filetype
       },
+      */
       success: function (data) {
-        console.log('success!')
+        console.log('success!');
       },
       error: function (xhr, status, err) {
         console.error(url, status, err.toString());
@@ -76,7 +78,7 @@ export default class ImageUpload extends React.Component {
       uploaded = (
         <div id='status'>
           <h3> Image uploaded! </h3>
-          <img src='file/path'/> 
+          <img src='file/path'/>
           <pre> file/path </pre>
         </div>
       );
@@ -89,7 +91,7 @@ export default class ImageUpload extends React.Component {
     return (
       <div>
         <label> Upload an image </label>
-        <form onSubmit={this.handleSubmit} encType='multipart/form-data' id='uploadForm'>
+        <form onSubmit={this.handleSubmit} formEncType='multipart/form-data' id='uploadForm'>
           <input type='file' id={this.props.id} name='userPhoto' onChange={this.handleFile} />
           <input type='submit' value='Upload Image' name='submit' disable={this.state.processing} />
         </form>
