@@ -3,6 +3,7 @@ import {bindAll} from 'lodash';
 import $ from 'jquery';
 
 const api = 'http://localhost:3000/api';
+const url = `${api}/images`;
 
 export default class ImageUpload extends React.Component {
   constructor() {
@@ -21,7 +22,6 @@ export default class ImageUpload extends React.Component {
     const file = e.target.files[0];
     const target = e.target;
 
-    console.log(file.name);
     reader.onload = (upload) => {
       this.setState({
         // dataUri: upload.target.result,
@@ -43,7 +43,6 @@ export default class ImageUpload extends React.Component {
       processing: true
     });
 
-    const url = `${api}/images`;
     const promise = $.ajax({
       url: url,
       type: 'POST',
@@ -54,7 +53,6 @@ export default class ImageUpload extends React.Component {
         // filetype: this.state.filetype
       },
       success: function (data) {
-        console.log(data)
         console.log('success!')
       },
       error: function (xhr, status, err) {
@@ -91,8 +89,8 @@ export default class ImageUpload extends React.Component {
     return (
       <div>
         <label> Upload an image </label>
-        <form onSubmit={this.handleSubmit} encTYpe='multipart/form-data'>
-          <input type='file' id={this.props.id} name={this.props.name} onChange={this.handleFile} />
+        <form onSubmit={this.handleSubmit} encType='multipart/form-data' id='uploadForm'>
+          <input type='file' id={this.props.id} name='userPhoto' onChange={this.handleFile} />
           <input type='submit' value='Upload Image' name='submit' disable={this.state.processing} />
         </form>
         {uploaded}

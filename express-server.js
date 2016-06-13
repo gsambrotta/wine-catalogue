@@ -8,28 +8,17 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const bl = require('bl');
 const _ = require('lodash');
-const multer  =   require('multer');
+const multer = require('multer');
 
 module.exports = (PORT) => {
   
   const wineData = path.join(__dirname, 'src/data/wine.json');
   const categoryData = path.join(__dirname, 'src/data/categories.json');
   const regionData = path.join(__dirname, 'src/data/region.json');
+  const imagesData = path.join(__dirname, 'src/data/images.json');
 
   const app = express();
   const jsonParser = bodyParser.json();
-
-  const storage =   multer.diskStorage({
-    destination: function (req, file, callback) {
-      callback(null, './uploads');
-    },
-
-    filename: function (req, file, callback) {
-      callback(null, file.fieldname + '-' + Date.now());
-    }
-
-  });
-  const upload = multer({ storage : storage});
 
   app.use(serveStatic(__dirname + '/build'));
   app.use(jsonParser);
@@ -45,7 +34,6 @@ module.exports = (PORT) => {
     res.setHeader('Cache-Control', 'no-cache');
     next();
   });
-
 
   // Read datas
   app.get('/api/wines', function (req, res) {
@@ -92,11 +80,18 @@ module.exports = (PORT) => {
     });
   })
 
-  app.get('/',function(req, res){
-    console.log(req.files); // userPhoto array
-    //res.sendfile(path.resolve('./api/images/image.jpg');
-    //res.sendFile(__dirname + "/index.html");
-  });
+  app.get('/api/images', function (req, res) {
+    fs.readFile(imagesData, function (err, data) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      } else {
+        const images = JSON.parse(data);
+        res.json(images);
+      }
+    });
+  })
+
 
   // Write datas
   app.post('/api/wines:id', jsonParser, function (req, res) {
@@ -142,13 +137,26 @@ module.exports = (PORT) => {
     res.end("new category posted");
   })
 
+
+  const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+      callback(null, './uploads');
+    },
+
+    filename: function (req, file, callback) {
+      callback(null, file.fieldname + '-' + Date.now());
+    }
+  });
+  
+  const upload = multer({ storage : storage}).single('userPhoto');
+
   // Image upload
-  app.post('/api/images', upload.single(file.fieldname) function(req, res){
+  app.post('/api/images', function(req, res, next){
     upload(req, res, function(err) {
       if(err) {
         return res.end("Error uploading file.");
       }
-      console.log(req.files) // I should see image array!
+      console.log(req.file) // I should see image array!
       res.end("msg form express: File is uploaded");
     });
   });
