@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
 import Griddle from 'griddle-react';
 
@@ -72,6 +73,12 @@ export default class AdminList extends React.Component {
 
     return (
       <div>
+        <button className='btn btn-secondary btn-small push-right'>
+          <Link to='/admin/new'> 
+            <i className='fa fa-plus' aria-hidden='true'></i> Create new
+          </Link>
+        </button>
+
         <Griddle results={this.props.wines} tableClassName='table' showFilter={true}
  showSettings={true} useGriddleStyles={false}
  columnMetadata={columnMeta} columns={['thumb', 'title', 'producer', 'region', 'category', 'actions']}/>

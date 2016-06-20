@@ -63,28 +63,3 @@ img {
   max-width: 900px;
 }
 
-// Buttons
-.btn {
-	border: 1px solid $link;
-	padding: 5px 7px;
-	background-color: transparent;
-
-	a {
-		color: $link;
-		text-transform: uppercase;
-	}
-
-	&:hover {
-		background-color: $link;
-		padding: 5px 7px;
-
-		a {
-			color: $beige;
-		}
-	}
-}
-
-.btn-small {
-	font-size: 1.2rem
-}
-

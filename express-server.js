@@ -105,21 +105,15 @@ module.exports = (PORT) => {
     if (editedWine) {
       const index = _.indexOf(previousWines, _.find(previousWines, {id: id}));
       previousWines[index] = req.body;
-      console.log('previous list of wine: ', previousWines);
-      //const updateWine = previousWines.splice(index, 1, {id: 100, title: 'New object.'});
-      //console.log('updated wine list ', updateWine);
       fs.writeFile(wineData, JSON.stringify(previousWines));
-    }
-    /*
-    const id = Date.now();
-    else {
+    
+    } else {
       fs.writeFile(wineData, JSON.stringify([
         ...previousWines,
-        req.body, // req.body = {id: 1, title: 2} ==> id: 1, title: 2
-        id
+        req.body
       ]));
     }
-    */
+
     res.status(202);
     res.json(true);
     res.end("new wine posted");
@@ -173,7 +167,6 @@ module.exports = (PORT) => {
     const id = req.params.id;
     const updated = _.filter(previous, (wine) => wine.id !== id);
 
-    // console.log('The updated list of wine ids:', _.map(updated, ({id}) => id));
     fs.writeFile(wineData, JSON.stringify(updated));
     res.json(true);
   })

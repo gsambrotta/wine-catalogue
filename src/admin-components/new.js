@@ -4,24 +4,21 @@ import $ from 'jquery';
 import ImageUpload from './common/imageUpload.js';
 
 
-export default class Edit extends React.Component {
+export default class New extends React.Component {
   constructor(props) {
     super();
 
     this.state = {
-      title: props.wine.title,
-      description: props.wine.description,
-      producer: props.wine.producer,
-      category: props.wine.category,
-      region: props.wine.region
+      title: '',
+      description: '',
+      producer: '',
+      category: '',
+      region: ''
     };
   }
 
   showCategoryTag() {
     const cat = this.props.categories.map(category => {
-      if (category.name === this.props.wine.category && !($('.tags button').hasClass('selected-tag'))) {
-        $(`.${category.name}`).addClass('selected-tag');
-      }
       return (
         <button key={category.id} className={category.name} onClick={this.setTagClass.bind(this)}>
           {category.name}
@@ -56,25 +53,25 @@ export default class Edit extends React.Component {
     return regionsOption;
   }
 
-  handleEditTitle(e) {
+  handleNewTitle(e) {
     this.setState({
       title: e.target.value
     });
   }
 
-  handleEditDesc(e) {
+  handleNewDesc(e) {
     this.setState({
       description: e.target.value
     });
   }
 
-  handleEditProducer(e) {
+  handleNewProducer(e) {
     this.setState({
       producer: e.target.value
     });
   }
 
-  handleEditRegion(e) {
+  handleNewRegion(e) {
     this.setState({
       region: e.target.value
     });
@@ -84,18 +81,21 @@ export default class Edit extends React.Component {
     evt.preventDefault();
 
     this.setState({
-      title: this.props.wine.title,
-      description: this.props.wine.description,
-      producer: this.props.wine.producer,
-      category: this.props.wine.category,
-      region: this.props.wine.region
+      title: '',
+      description: '',
+      producer: '',
+      category: '',
+      region: ''
     });
+
+    $('.tags button').removeClass('selected-tag');
 
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
 
+    const id = Date.now();
     let title = this.state.title.trim();
     let description = this.state.description.trim();
     let producer = this.state.producer.trim();
@@ -105,14 +105,16 @@ export default class Edit extends React.Component {
       return;
     }
 
-    this.props.onEditSave({
-      id: this.props.wine.id,
+    this.props.saveNew({
+      id,
       title,
       description,
       producer,
       category,
       region
     });
+
+    this.context.router.goBack();
   }
 
   render() {
@@ -121,10 +123,10 @@ export default class Edit extends React.Component {
       <div>
       
       <div className='form-group'>
-        <ImageUpload id={this.state.id} name={this.state.title} />
+        <ImageUpload id='#' name={this.state.title} />
       </div>
 
-      <form className='edit-comp' onSubmit={this.handleSubmit.bind(this)}>
+      <form className='new-comp' onSubmit={this.handleSubmit.bind(this)}>
         <header>
           <div className='smallLink' onClick={this.context.router.goBack}>
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back
@@ -134,15 +136,15 @@ export default class Edit extends React.Component {
         <main>
 
           <div className='form-group'>
-            <input type='text' value={this.state.title} onChange={this.handleEditTitle.bind(this)}/>
+            <input type='text' value={this.state.title} onChange={this.handleNewTitle.bind(this)}/>
           </div>
 
           <div className='form-group'>
-            <textarea rows='4' cols='50' value={this.state.description} onChange={this.handleEditDesc.bind(this)}></textarea>
+            <textarea rows='4' cols='50' value={this.state.description} onChange={this.handleNewDesc.bind(this)}></textarea>
           </div>
 
           <div className='form-group'>
-            <textarea rows='4' cols='50' value={this.state.producer} onChange={this.handleEditProducer.bind(this)}></textarea>
+            <textarea rows='4' cols='50' value={this.state.producer} onChange={this.handleNewProducer.bind(this)}></textarea>
           </div>
 
           <div className='form-group'>
@@ -150,7 +152,7 @@ export default class Edit extends React.Component {
           </div>
 
           <div className='form-group'>
-            <select value={this.state.region} onChange={this.handleEditRegion.bind(this)}>
+            <select value={this.state.region} onChange={this.handleNewRegion.bind(this)}>
               {this.showRegionSelect()}
             </select>
           </div>
@@ -180,14 +182,13 @@ export default class Edit extends React.Component {
   }
 }
 
-Edit.propTypes = {
+New.propTypes = {
   wine: React.PropTypes.array.isRequired,
   categories: React.PropTypes.array.isRequired,
   regions: React.PropTypes.array.isRequired
-  // onEditSave: React.propTypes.function.isRequired
 };
 
-Edit.contextTypes = {
+New.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 

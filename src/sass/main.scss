@@ -8,10 +8,12 @@
 @import 'base/reset';
 @import 'base/typo';
 @import 'base/colors';
+@import 'base/buttons';
 @import 'base/helpers';
-@import 'base/grid';
+//@import 'base/grid';
 @import 'base/base';
 
 // Component
 @import 'components/footer';
 @import 'components/modifyStatus';
+@import 'components/grid';

@@ -1,0 +1,52 @@
+
+// Buttons
+.btn {
+	border: 1px solid $link;
+	padding: 6px 9px;
+	background-color: transparent;
+	@include SourceSansProRegular;
+
+	i {
+		padding-right: 6px;
+	}
+
+	a {
+		color: $link;
+		text-transform: uppercase;
+		text-align: center;
+	}
+
+	&:hover {
+		background-color: $link;
+
+		a {
+			color: $beige;
+		}
+	}
+}
+
+.btn-small {
+	font-size: 1.2rem
+}
+
+.btn-wide {
+	width: 100%;
+}
+
+.btn-secondary {
+	background-color: $link;
+
+	a {
+		color: $beige;
+	}
+
+	&:hover {
+		background-color: transparent;
+
+		a {
+			color: $link;
+		}
+	}
+
+}
+
