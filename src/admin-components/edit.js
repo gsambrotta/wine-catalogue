@@ -93,15 +93,23 @@ export default class Edit extends React.Component {
 
   }
 
+  onImageSave(profilePic) {
+    console.log(profilePic);
+    this.setState({
+      profilePic: profilePic.profilePic
+    }) 
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
 
     let title = this.state.title.trim();
     let description = this.state.description.trim();
+    let thumb = this.state.profilePic;
     let producer = this.state.producer.trim();
     let category = this.state.category;
     let region = this.state.region;
-    if (!title || !description || !producer || !category || !region) {
+    if (!title || !description || !producer || !category || !region || !thumb) {
       return;
     }
 
@@ -109,10 +117,13 @@ export default class Edit extends React.Component {
       id: this.props.wine.id,
       title,
       description,
+      thumb,
       producer,
       category,
       region
     });
+
+    this.context.router.goBack();
   }
 
   render() {
@@ -121,7 +132,7 @@ export default class Edit extends React.Component {
       <div>
       
       <div className='form-group'>
-        <ImageUpload id={this.state.id} name={this.state.title} />
+        <ImageUpload onImageSave={this.onImageSave.bind(this)} name={this.state.title} />
       </div>
 
       <form className='edit-comp' onSubmit={this.handleSubmit.bind(this)}>
@@ -163,7 +174,7 @@ export default class Edit extends React.Component {
 
         <footer>
           <div className='smallLink' onClick={this.context.router.goBack}>
-            <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back (did you save?)
+            <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back without saving
           </div>
 
           <div className='reset'>

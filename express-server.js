@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const bl = require('bl');
 const _ = require('lodash');
 const multer = require('multer');
+const statics = require('serve-static');
 
 module.exports = (PORT) => {
 
@@ -19,6 +20,8 @@ module.exports = (PORT) => {
 
   const app = express();
   const jsonParser = bodyParser.json();
+
+  app.use(statics(__dirname + '/uploads'));
 
   app.use(serveStatic(__dirname + '/build'));
   app.use(jsonParser);
@@ -152,7 +155,9 @@ module.exports = (PORT) => {
   const upload = multer({ storage : storage});
 
   // Image upload
-  app.post('/api/images', upload.single('userPhoto'), function(req, res){
+  app.post('/api/images', upload.single('photo'), function(req, res){
+    console.log(req.file);
+    return res.json(req.file.filename);
     upload(req, res, function(err) {
       if(err) {
         return res.end("Error uploading file.");
