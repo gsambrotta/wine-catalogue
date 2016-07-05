@@ -39,6 +39,47 @@ module.exports = (PORT) => {
     next();
   });
 
+  // Check Autentication 
+  function checkAuth(req, res, next) {
+    if (!req.session.user_id) {
+      res.send('You are not authorized to view this page');
+    } else {
+      next();
+    }
+  }
+
+  app.get('/admin', checkAuth, function (req, res) {
+    res.send('if you are viewing this page it means you are logged in');
+  });
+
+  // Login route
+  app.post('http://localhost:3001/login', function (req, res) {
+    var post = req.body;
+    if (post.user === 'john' && post.password === 'password') {
+      req.session.user_id = req.body.id;
+      res.redirect('http://localhost:3001/admin');
+    } else {
+      res.send('Bad user/pass');
+    }
+  });
+
+  // Login route
+  app.post('/api/auth', function (req, res) {
+    var post = req.body;
+    if (post.username === 'john' && post.password === 'password') {
+      req.session.user_id = post.id;
+      res.redirect('http://localhost:3001/admin');
+    } else {
+      res.send('Bad user/pass');
+    }
+  });
+
+  // Logout route
+  app.get('/logout', function (req, res) {
+    delete req.session.user_id;
+    res.redirect('/login');
+  });
+
   // Read datas
   app.get('/api/wines', function (req, res) {
     fs.readFile(wineData, function (err, data) {
@@ -175,7 +216,6 @@ module.exports = (PORT) => {
     fs.writeFile(wineData, JSON.stringify(updated));
     res.json(true);
   })
-
 
   // Finally, listen to the port
   app.listen(PORT, function (err) {

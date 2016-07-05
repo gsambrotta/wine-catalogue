@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import { Router, RouterContext } from 'react-router';
 import CardThumb from './cardThumb.js';
 
 export default class FrontList extends React.Component {

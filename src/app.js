@@ -13,6 +13,7 @@ import Home from './front-components/home';
 import FrontList from './front-components/list';
 import Detail from './front-components/wineDetail';
 
+import Login from './admin-components/login';
 import AdminList from './admin-components/list';
 import EditWrap from './admin-components/editWrap';
 import New from './admin-components/new';
@@ -82,6 +83,27 @@ export default class App extends React.Component {
     });
   }
 
+  // Save new item from /admin/new
+  saveLogin(user) {
+    const id = Date.now();
+    const url = `${api}/login`;
+
+    const req = $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      date: user
+    });
+
+    req.done(() => {
+      console.log('connect!');
+    });
+
+    req.fail((xhr, status, err) => {
+      console.error(url, status, err.toString());
+    });
+  }
+
 
   // Save new item from /admin/new
   saveNew(newWine) {
@@ -125,9 +147,7 @@ export default class App extends React.Component {
 
   // Delete the item from /admin
   deleteCallback(id) {
-    console.log('wine id to be deleted ' + id);
     const url = `${api}/wines/${id}`;
-    console.log('wine url to be deleted ' + url);
     const req = $.ajax({
       url: url,
       dataType: 'json',
@@ -159,7 +179,8 @@ export default class App extends React.Component {
           categories: this.state.categories,
           deleteCallback: this.deleteCallback.bind(this),
           onEditSave: this.onEditSave.bind(this),
-          saveNew: this.saveNew.bind(this)
+          saveNew: this.saveNew.bind(this),
+          sendLogin: this.sendLogin.bind(this)
         })
         }
       </main>
@@ -176,7 +197,9 @@ ReactDOM.render(
 
   <Router history={browserHistory}>
 
-     <Route path='/admin' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>
+    <Route path='/login' component={Login} />
+
+    <Route path='/admin' winesUrl={`${api}/wines`} regionUrl={`${api}/regions`} catUrl={`${api}/categories`} component={App}>
       <IndexRoute component={AdminList}/>
       <Route path='/admin/edit/:wineId' component={EditWrap}/>
       <Route path='/admin/new' component={New}/>

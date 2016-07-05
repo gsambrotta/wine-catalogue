@@ -1,3 +1,6 @@
+/* global Filereader */
+/* global FormData */
+
 import React from 'react';
 import {bindAll} from 'lodash';
 import $ from 'jquery';
@@ -21,7 +24,6 @@ export default class ImageUpload extends React.Component {
   handleFile(e) {
     const reader = new FileReader();
     const file = e.target.files[0];
-    const target = e.target;
 
     this.setState({
       processing: true
@@ -38,7 +40,7 @@ export default class ImageUpload extends React.Component {
         contentType: false,
         data: formData,
         success: (filename) => {
-          const pathToPhoto = `${apiServer}/${filename}`; 
+          // const pathToPhoto = `${apiServer}/${filename}`; 
 
           this.setState({
             processing: false,
@@ -48,7 +50,7 @@ export default class ImageUpload extends React.Component {
 
           this.props.onImageSave({
             profilePic: `${apiServer}/${this.state.filename}`
-          })
+          });
         },
         error: function (xhr, status, err) {
           console.error(url, status, err.toString());
@@ -58,7 +60,6 @@ export default class ImageUpload extends React.Component {
     // read content of specific Blob once finished
     reader.readAsDataURL(file);
   }
-
 
 
   render() {
@@ -82,7 +83,7 @@ export default class ImageUpload extends React.Component {
       <div>
         <label> Upload the wine cover image here: </label>
           <input type='file' id='photo' name='photo' onChange={this.handleFile} />
-          {uploaded}
+          { uploaded }
       </div>
     );
   }

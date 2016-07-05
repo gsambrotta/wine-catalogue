@@ -96,7 +96,7 @@ export default class New extends React.Component {
     console.log(profilePic);
     this.setState({
       profilePic: profilePic.profilePic
-    }) 
+    }); 
   }
 
   handleSubmit(evt) {
@@ -113,7 +113,6 @@ export default class New extends React.Component {
       return;
     }
 
-    
 
     this.props.saveNew({
       id,
