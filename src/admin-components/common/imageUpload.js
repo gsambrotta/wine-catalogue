@@ -67,10 +67,9 @@ export default class ImageUpload extends React.Component {
 
     if (this.state.uploaded) {
       uploaded = (
-        <div id='status'>
-          <h3> Image uploaded! </h3>
+        <div id='status' className='image-uploaded'>
+          <h3 className='image-uploaded__title'> Image uploaded successfully </h3>
           <img src={`${apiServer}/${this.state.filename}`} />
-          <pre> saved at: {`${apiServer}/${this.state.filename}`} </pre>
         </div>
       );
     }
@@ -81,9 +80,9 @@ export default class ImageUpload extends React.Component {
 
     return (
       <div>
-        <label> Upload an image </label>
+        <label> Upload the wine cover image here: </label>
           <input type='file' id='photo' name='photo' onChange={this.handleFile} />
-        {uploaded}
+          {uploaded}
       </div>
     );
   }

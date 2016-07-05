@@ -1,0 +1,25 @@
+.form-entry {
+	
+	main {
+		width: 70%;
+    margin: 0 auto;
+	}
+
+	.form-group {
+
+		.input-title {
+			text-transform: capitalize;
+		}
+
+		.dropdown-group {
+			margin-top: 20px;
+		}
+
+		button {
+			&:first-of-type {
+				margin-left: 0;
+			}
+		}
+	}
+
+}

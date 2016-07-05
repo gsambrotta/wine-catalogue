@@ -129,13 +129,9 @@ export default class Edit extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className='form-entry edit-comp'>
       
-      <div className='form-group'>
-        <ImageUpload onImageSave={this.onImageSave.bind(this)} name={this.state.title} />
-      </div>
-
-      <form className='edit-comp' onSubmit={this.handleSubmit.bind(this)}>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         <header>
           <div className='smallLink' onClick={this.context.router.goBack}>
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back
@@ -143,30 +139,34 @@ export default class Edit extends React.Component {
         </header>
 
         <main>
-
           <div className='form-group'>
-            <input type='text' value={this.state.title} onChange={this.handleEditTitle.bind(this)}/>
+            <ImageUpload onImageSave={this.onImageSave.bind(this)} name={this.state.title} />
           </div>
 
           <div className='form-group'>
+            <label> Update here the title of your wine: </label>
+            <input type='text' className='input-title' value={this.state.title} onChange={this.handleEditTitle.bind(this)}/>
+          </div>
+
+          <div className='form-group'>
+            <label> Update here the wine description: </label>
             <textarea rows='4' cols='50' value={this.state.description} onChange={this.handleEditDesc.bind(this)}></textarea>
           </div>
 
           <div className='form-group'>
+            <label> Update here the producer information: </label>
             <textarea rows='4' cols='50' value={this.state.producer} onChange={this.handleEditProducer.bind(this)}></textarea>
           </div>
 
-          <div className='form-group'>
-            Image upload Big Picture
-          </div>
-
-          <div className='form-group'>
+          <div className='form-group dropdown-group'>
+            <label> Choose the region here: </label>
             <select value={this.state.region} onChange={this.handleEditRegion.bind(this)}>
               {this.showRegionSelect()}
             </select>
           </div>
 
           <div className='form-group tags'>
+            <label> Click on the wine category you want: </label>
             {this.showCategoryTag()}
           </div>
 
@@ -177,12 +177,14 @@ export default class Edit extends React.Component {
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back without saving
           </div>
 
-          <div className='reset'>
-            <button onClick={this.handleReset.bind(this)}> Reset </button>
-          </div>
+          <div className='push-right'>
+            <div className='btn reset btn-inline'>
+              <button onClick={this.handleReset.bind(this)}> Reset </button>
+            </div>
 
-          <div className='save'>
-            <button type='submit'> Save </button>
+            <div className='btn save btn-inline'>
+              <button type='submit'> Save </button>
+            </div>
           </div>
         </footer>
       </form>

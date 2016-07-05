@@ -50,3 +50,43 @@
 
 }
 
+.btn button {
+	border: 0;
+	background-color: transparent;
+	padding: 0;
+	@include SourceSansProRegular;
+	color: $link;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.btn:hover button {
+	background-color: $link;
+	color: $beige;
+}
+
+
+.btn-secondary button {
+	border: 0;
+	background-color: $link;
+	padding: 0;
+	@include SourceSansProRegular;
+	color: $beige;
+	text-transform: uppercase;
+	text-align: center;
+
+	&:hover {
+		background-color: transparent;
+
+		a {
+			color: $link;
+		}
+	}
+}
+
+.btn-inline {
+	display: inline;
+	margin: 0 10px;
+}
+
+

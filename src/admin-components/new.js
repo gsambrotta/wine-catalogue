@@ -131,13 +131,9 @@ export default class New extends React.Component {
   render() {
 
     return (
-      <div>
-      
-      <div className='form-group'>
-        <ImageUpload onImageSave={this.onImageSave.bind(this)} name={this.state.title} />
-      </div>
+      <div className='form-entry new-comp'>
 
-      <form className='new-comp' onSubmit={this.handleSubmit.bind(this)}>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         <header>
           <div className='smallLink' onClick={this.context.router.goBack}>
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back
@@ -147,28 +143,33 @@ export default class New extends React.Component {
         <main>
 
           <div className='form-group'>
-            <input type='text' value={this.state.title} onChange={this.handleNewTitle.bind(this)}/>
+            <ImageUpload onImageSave={this.onImageSave.bind(this)} name={this.state.title} />
           </div>
 
           <div className='form-group'>
+            <label> Here goes your title: </label>
+            <input type='text' className='input-title' value={this.state.title} onChange={this.handleNewTitle.bind(this)}/>
+          </div>
+
+          <div className='form-group'>
+            <label> Here goes your description: </label>
             <textarea rows='4' cols='50' value={this.state.description} onChange={this.handleNewDesc.bind(this)}></textarea>
           </div>
 
           <div className='form-group'>
+            <label> Here goes producer information: </label>
             <textarea rows='4' cols='50' value={this.state.producer} onChange={this.handleNewProducer.bind(this)}></textarea>
           </div>
 
           <div className='form-group'>
-            Image upload Big Picture
-          </div>
-
-          <div className='form-group'>
+            <label> Choose the region here: </label>
             <select value={this.state.region} onChange={this.handleNewRegion.bind(this)}>
               {this.showRegionSelect()}
             </select>
           </div>
 
           <div className='form-group tags'>
+            <label> Click on the wine category you want: </label>
             {this.showCategoryTag()}
           </div>
 
@@ -179,12 +180,14 @@ export default class New extends React.Component {
             <i className='fa fa-long-arrow-left' aria-hidden='true'></i> back without saving
           </div>
 
-          <div className='reset'>
-            <button onClick={this.handleReset.bind(this)}> Reset </button>
-          </div>
+          <div className='push-right'>
+            <div className='btn btn-inline reset'>
+              <button onClick={this.handleReset.bind(this)}> Reset </button>
+            </div>
 
-          <div className='save'>
-            <button type='submit'> Save </button>
+            <div className='btn btn-inline save'>
+              <button type='submit'> Save </button>
+            </div>
           </div>
         </footer>
       </form>
