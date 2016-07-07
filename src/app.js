@@ -180,7 +180,7 @@ export default class App extends React.Component {
           deleteCallback: this.deleteCallback.bind(this),
           onEditSave: this.onEditSave.bind(this),
           saveNew: this.saveNew.bind(this),
-          sendLogin: this.sendLogin.bind(this)
+          // sendLogin: this.sendLogin.bind(this)
         })
         }
       </main>

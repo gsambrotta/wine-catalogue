@@ -12,6 +12,15 @@ export default class AdminList extends React.Component {
     super();
   }
 
+  componentWillMount() {
+    const token = localStorage.getItem('token');
+    const expires = localStorage.getItem('expires');
+
+    if (!token || new Date(expires) < new Date()) {
+      console.log('Not authenticated');
+      this.props.history.push('/login');
+    }
+  }
 
   addActionCloumn() {
     let wines = this.props.wines;
@@ -74,7 +83,7 @@ export default class AdminList extends React.Component {
     return (
       <div>
         <button className='btn btn-secondary btn-small push-right'>
-          <Link to='/admin/new'> 
+          <Link to='/admin/new'>
             <i className='fa fa-plus' aria-hidden='true'></i> Create new
           </Link>
         </button>

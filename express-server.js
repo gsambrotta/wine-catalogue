@@ -10,6 +10,7 @@ const bl = require('bl');
 const _ = require('lodash');
 const multer = require('multer');
 const statics = require('serve-static');
+const crypto = require('crypto');
 
 module.exports = (PORT) => {
 
@@ -20,6 +21,9 @@ module.exports = (PORT) => {
 
   const app = express();
   const jsonParser = bodyParser.json();
+  let token;
+  const nuid = 'wineAgeAdmin16';
+  const ssw = 'wIn3Ag3!$765%'
 
   app.use(statics(__dirname + '/uploads'));
 
@@ -39,38 +43,26 @@ module.exports = (PORT) => {
     next();
   });
 
-  // Check Autentication 
-  function checkAuth(req, res, next) {
-    if (!req.session.user_id) {
-      res.send('You are not authorized to view this page');
-    } else {
-      next();
-    }
-  }
-
-  app.get('/admin', checkAuth, function (req, res) {
-    res.send('if you are viewing this page it means you are logged in');
+  crypto.randomBytes(48, function(err, buffer) {
+    token = buffer.toString('hex');
   });
 
   // Login route
-  app.post('http://localhost:3001/login', function (req, res) {
+  app.post('/api/auth', jsonParser, function (req, res) {
     var post = req.body;
-    if (post.user === 'john' && post.password === 'password') {
-      req.session.user_id = req.body.id;
-      res.redirect('http://localhost:3001/admin');
-    } else {
-      res.send('Bad user/pass');
-    }
-  });
+    if (post.username === nuid && post.password === ssw) {
+      res.status(200);
+      res.json({
+        ok: true,
+        token: token,
+        expires: new Date(+new Date() + 1000 * 60 * 60 * 12)
+      });
 
-  // Login route
-  app.post('/api/auth', function (req, res) {
-    var post = req.body;
-    if (post.username === 'john' && post.password === 'password') {
-      req.session.user_id = post.id;
-      res.redirect('http://localhost:3001/admin');
     } else {
-      res.send('Bad user/pass');
+      res.status(401);
+      res.json({
+        error: true
+      });
     }
   });
 
@@ -150,7 +142,7 @@ module.exports = (PORT) => {
       const index = _.indexOf(previousWines, _.find(previousWines, {id: id}));
       previousWines[index] = req.body;
       fs.writeFile(wineData, JSON.stringify(previousWines));
-    
+
     } else {
       fs.writeFile(wineData, JSON.stringify([
         ...previousWines,

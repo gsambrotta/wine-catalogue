@@ -41,15 +41,18 @@ export default class Login extends React.Component {
       url: url,
       dataType: 'json',
       type: 'POST',
-      date: {
+      data: {
         id,
         username,
         password
       }
     });
 
-    req.done(() => {
-      console.log('connect!');
+    req.done((result) => {
+      // console.log('connect!', result);
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('expires', result.expires);
+      this.props.history.push('/admin');
     });
 
     req.fail((xhr, status, err) => {
@@ -60,11 +63,20 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <input type='text' value={this.state.username} onChange={this.handleUsername.bind(this)}/>
-        <input type='password' value={this.state.password} onChange={this.handlePassword.bind(this)}/>
-        <button type='submit'> login </button>
-      </form>
+      <div>
+        <form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
+          <img src='/static/img/vegan-logo.png' alt='wine age logo' className='logo' />
+          <div className="form-group">
+            <input type='text' value={this.state.username} placeholder='username' onChange={this.handleUsername.bind(this)}/>
+          </div>
+          <div className="form-group">
+            <input type='password' value={this.state.password} placeholder='password' onChange={this.handlePassword.bind(this)}/>
+          </div>
+          <div className='btn login-btn push-right'>
+            <button type='submit'> login </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

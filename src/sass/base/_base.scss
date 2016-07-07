@@ -24,7 +24,7 @@ body {
 }
 
 
-// List 
+// List
 .list--inline {
 	display: flex;
 	flex-wrap: wrap;
@@ -45,7 +45,7 @@ a {
 .smallLink {
 	color: $text-color;
 	cursor: pointer;
-	
+
 	&:hover {
 		text-decoration: underline;
 	}
