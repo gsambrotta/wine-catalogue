@@ -64,12 +64,13 @@ export default class Login extends React.Component {
   render() {
     return (
       <div>
-        <form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
+        <form className='login-form' onSubmit={this.handleSubmit.bind(this)}>
           <img src='/static/img/vegan-logo.png' alt='wine age logo' className='logo' />
-          <div className="form-group">
+          <p>For demo purpose: 'demo' as username and 'demopassword' as password </p>
+          <div className='form-group'>
             <input type='text' value={this.state.username} placeholder='username' onChange={this.handleUsername.bind(this)}/>
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <input type='password' value={this.state.password} placeholder='password' onChange={this.handlePassword.bind(this)}/>
           </div>
           <div className='btn login-btn push-right'>

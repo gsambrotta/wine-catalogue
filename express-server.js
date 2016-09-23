@@ -22,8 +22,8 @@ module.exports = (PORT) => {
   const app = express();
   const jsonParser = bodyParser.json();
   let token;
-  const nuid = 'wineAgeAdmin16';
-  const ssw = 'wIn3Ag3!$765%'
+  const nuid = 'demo';
+  const ssw = 'demopassword'
 
   app.use(statics(__dirname + '/uploads'));
 
