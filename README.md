@@ -36,9 +36,9 @@ npm start lint
 
 # Final Result
 
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/home.jpg)
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/wine-list.jpg)
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/wine-details.jpg)
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/login.jpg)
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/admin-wine-list.jpg)
-![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/edit-wine.jpg)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/home.png)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/wine-list.png)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/wine-details.png)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/login.png)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/admin-wine-list.png)
+![alt tag](https://raw.githubusercontent.com/gsambrotta/wine-catalogue/master/edit-wine.png)
